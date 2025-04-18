@@ -1,6 +1,5 @@
 package com.minidevtechcom.myanHomeLabBackend.service;
 
-
 import com.minidevtechcom.myanHomeLabBackend.model.BrokenLink;
 import com.minidevtechcom.myanHomeLabBackend.repository.BrokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,6 @@ public class BrokenLinkService implements BrokenLinkServiceInterface {
 
     @Autowired
     private BrokenRepository repo;
-
 
     @Override
     public BrokenLink save(BrokenLink brokenLink) {
@@ -34,4 +32,15 @@ public class BrokenLinkService implements BrokenLinkServiceInterface {
     public Optional<BrokenLink> findByTmdbId(int tmdbId) {
         return repo.findById(tmdbId);
     }
+
+    public BrokenLink deleteBrokenLinkById(int id) {
+        Optional<BrokenLink> existing = repo.findById(id);
+        if (existing.isPresent()) {
+            repo.deleteById(id); // deletes
+            return existing.get(); // return what was deleted
+        } else {
+            return null;
+        }
+    }
+
 }

@@ -43,4 +43,15 @@ public class BrokenLinkController {
         return ResponseEntity.ok(saved);
     }
 
+    // DELETE: Delete a broken link entry by ID
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteBrokenLinkById(@PathVariable int id) {
+        try {
+            service.deleteBrokenLinkById(id);
+            return ResponseEntity.ok("BrokenLink deleted successfully.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete BrokenLink.");
+        }
+    }
+
 }

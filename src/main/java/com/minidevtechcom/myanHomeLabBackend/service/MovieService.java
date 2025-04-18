@@ -40,4 +40,14 @@ public class MovieService {
       return null;
     }
   }
+
+  public Movie deleteMovieById(int tmdbId) {
+    Movie existingMovie = repo.findById(tmdbId).orElse(null);
+    if (existingMovie != null) {
+      repo.delete(existingMovie);
+      return existingMovie;
+    } else {
+      return null;
+    }
+  }
 }

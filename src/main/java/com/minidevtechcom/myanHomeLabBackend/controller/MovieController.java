@@ -58,16 +58,26 @@ public class MovieController {
         return ResponseEntity.ok(response);
     }
 
-    // POST: Create a new movie
     @PostMapping("/movies")
-    public ResponseEntity<?> createMovie(@RequestBody Movie movie) {
-        Movie saved = service.save(movie);
-        if (saved != null) {
-            return ResponseEntity.ok(saved);
-        } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to create movie.");
-        }
+    public ResponseEntity<?> createOrUpdateMovie(@RequestBody Movie movie) {
+        try {
+            Movie existing = service.getMovieByTmdbId(movie.getTmdbId());
+            Movie result;
 
+            if (existing != null) {
+                // Update existing movie
+                movie.setTmdbId(existing.getTmdbId()); // assuming you use ID for primary key
+                result = service.updateMovieById(movie.getTmdbId(), movie);
+            } else {
+                // Create new movie
+                result = service.save(movie);
+            }
+
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("❌ Failed to save or update movie: " + e.getMessage());
+        }
     }
 
     // PUT: Update an existing movie
@@ -80,5 +90,15 @@ public class MovieController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to update movie.");
         }
 
+    }
+
+    @DeleteMapping("/movies/{tmdbId}")
+    public ResponseEntity<?> deleteMovieById(@PathVariable int tmdbId) {
+        try {
+            service.deleteMovieById(tmdbId);
+            return ResponseEntity.ok("Movie deleted successfully.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete movie.");
+        }
     }
 }
