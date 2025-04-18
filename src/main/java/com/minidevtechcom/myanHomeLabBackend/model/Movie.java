@@ -1,8 +1,6 @@
 package com.minidevtechcom.myanHomeLabBackend.model;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,7 +16,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @NoArgsConstructor
 public class Movie {
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int movieId;
     private String moiveName;
 
