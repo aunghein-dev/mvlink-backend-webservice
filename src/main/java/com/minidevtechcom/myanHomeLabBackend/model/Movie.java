@@ -39,6 +39,14 @@ public class Movie {
         this.movieId = movieId;
     }
 
+    public String getMoiveName() {
+        return moiveName;
+    }
+
+    public void setMoiveName(String moiveName) {
+        this.moiveName = moiveName;
+    }
+
     public int getTmdbId() {
         return tmdbId;
     }
