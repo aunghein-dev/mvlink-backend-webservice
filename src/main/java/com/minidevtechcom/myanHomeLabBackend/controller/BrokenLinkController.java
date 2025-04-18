@@ -18,8 +18,9 @@ public class BrokenLinkController {
     @Autowired
     private BrokenLinkService service;
 
+    // GET: Retrieve all broken link entries
     @GetMapping("/get")
-    public ResponseEntity<List<BrokenLink>> getAllBrokenLink(){
+    public ResponseEntity<List<BrokenLink>> getAllBrokenLink() {
         return new ResponseEntity<>(service.getAllBrokenLink(), HttpStatus.FOUND);
     }
 
@@ -29,7 +30,6 @@ public class BrokenLinkController {
         BrokenLink saved = service.save(brokenLink);
         return ResponseEntity.ok(saved);
     }
-
 
     // PUT: Update existing broken link entry
     @PutMapping("/update/{id}")

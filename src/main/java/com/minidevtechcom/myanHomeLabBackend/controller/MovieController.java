@@ -1,6 +1,5 @@
 package com.minidevtechcom.myanHomeLabBackend.controller;
 
-
 import com.minidevtechcom.myanHomeLabBackend.model.Movie;
 import com.minidevtechcom.myanHomeLabBackend.service.MovieService;
 import com.minidevtechcom.myanHomeLabBackend.util.AESUtil;
@@ -13,7 +12,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 @RestController
 @RequestMapping("/mapi/")
 @CrossOrigin(origins = "http://127.0.0.1:5500") // Uncomment or modify this line to enable CORS
@@ -22,6 +20,7 @@ public class MovieController {
     @Autowired
     private MovieService service;
 
+    // GET: Retrieve all movies
     @GetMapping("/movies")
     public ResponseEntity<List<Movie>> getAllMovies() {
         List<Movie> movies = service.getAllMovies();
@@ -32,6 +31,7 @@ public class MovieController {
         }
     }
 
+    // GET: Retrieve a specific movie by TMDB ID
     @GetMapping("movies/{tmdbId}")
     public ResponseEntity<Movie> getMovieByTmdbId(@PathVariable int tmdbId) {
         Movie movie = service.getMovieByTmdbId(tmdbId);
@@ -43,6 +43,7 @@ public class MovieController {
         }
     }
 
+    // GET: Retrieve more secured sharedLink by TMDB ID
     @GetMapping("/secure-movie/{tmdbId}")
     public ResponseEntity<?> getSecureMovieLink(@PathVariable int tmdbId) {
         Movie movie = service.getMovieByTmdbId(tmdbId);
@@ -55,5 +56,29 @@ public class MovieController {
         response.put("safeLink", encryptedLink);
 
         return ResponseEntity.ok(response);
+    }
+
+    // POST: Create a new movie
+    @PostMapping("/movies")
+    public ResponseEntity<?> createMovie(@RequestBody Movie movie) {
+        Movie saved = service.save(movie);
+        if (saved != null) {
+            return ResponseEntity.ok(saved);
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to create movie.");
+        }
+
+    }
+
+    // PUT: Update an existing movie
+    @PutMapping("/movies/{tmdbId}")
+    public ResponseEntity<?> updateMovieById(@PathVariable int tmdbId, @RequestBody Movie movie) {
+        Movie updated = service.updateMovieById(tmdbId, movie);
+        if (updated != null) {
+            return ResponseEntity.ok(updated);
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to update movie.");
+        }
+
     }
 }
