@@ -61,20 +61,19 @@ public class MovieController {
     @PostMapping("/movies")
     public ResponseEntity<?> createOrUpdateMovie(@RequestBody Movie movie) {
         try {
+
             Movie existing = service.getMovieByTmdbId(movie.getTmdbId());
             Movie result;
 
             if (existing != null) {
-                // Update existing movie
-                movie.setTmdbId(existing.getTmdbId()); // assuming you use ID for primary key
                 result = service.updateMovieById(movie.getTmdbId(), movie);
             } else {
-                // Create new movie
                 result = service.save(movie);
             }
 
             return ResponseEntity.ok(result);
         } catch (Exception e) {
+            e.printStackTrace(); // log the real error
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("❌ Failed to save or update movie: " + e.getMessage());
         }

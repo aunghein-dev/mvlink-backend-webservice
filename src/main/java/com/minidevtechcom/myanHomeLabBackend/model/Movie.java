@@ -1,12 +1,16 @@
 package com.minidevtechcom.myanHomeLabBackend.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Data
 @Entity
@@ -24,7 +28,10 @@ public class Movie {
     private String sharedProviderName;
     private String fileSize;
     private String resolutionDesc;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
     private Date linkUploadDate;
+
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
     private Date linkUpdateDate;
 
     public int getMovieId() {
