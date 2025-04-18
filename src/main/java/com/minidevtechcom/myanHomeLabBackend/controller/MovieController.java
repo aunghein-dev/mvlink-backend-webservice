@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,12 +25,15 @@ public class MovieController {
     @GetMapping("/movies")
     public ResponseEntity<List<Movie>> getAllMovies() {
         List<Movie> movies = service.getAllMovies();
+
+        // Check if the list is empty and return an empty list with 200 OK status
         if (movies.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ArrayList<>(), HttpStatus.OK); // Return empty list
         } else {
-            return new ResponseEntity<>(movies, HttpStatus.OK);
+            return new ResponseEntity<>(movies, HttpStatus.OK); // Return movies with 200 OK status
         }
     }
+
 
     // GET: Retrieve a specific movie by TMDB ID
     @GetMapping("movies/{tmdbId}")
