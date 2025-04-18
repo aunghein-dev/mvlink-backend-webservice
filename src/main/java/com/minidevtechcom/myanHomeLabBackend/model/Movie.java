@@ -14,7 +14,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class Movie {
 
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int movieId;
     private String moiveName;
 
