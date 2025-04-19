@@ -15,7 +15,11 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/mapi/")
-@CrossOrigin(origins = "http://127.0.0.1:5500") // Uncomment or modify this line to enable CORS
+@CrossOrigin(origins = {
+        "https://tourmaline-unicorn-d1e10a.netlify.app",
+        "https://myan-home-tainment.netlify.app"
+})
+
 public class MovieController {
 
     @Autowired

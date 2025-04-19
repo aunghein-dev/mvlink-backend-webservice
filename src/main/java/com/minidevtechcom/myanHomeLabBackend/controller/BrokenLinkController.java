@@ -12,7 +12,11 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/linkbroken")
-@CrossOrigin(origins = "http://127.0.0.1:5500")
+@CrossOrigin(origins = {
+        "https://tourmaline-unicorn-d1e10a.netlify.app",
+        "https://myan-home-tainment.netlify.app"
+})
+
 public class BrokenLinkController {
 
     @Autowired
